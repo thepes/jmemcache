@@ -71,9 +71,7 @@ public class JCacheMg {
 	
 	public static void initInstance()
 	{
-		synchronized (instance) {
-			instance = new JCacheMg();
-		}
+		instance = new JCacheMg();
 	}
 
 }

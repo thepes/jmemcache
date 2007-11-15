@@ -78,7 +78,7 @@ public class CacheInstance {
 				return (null);
 			if (hasExpired(obj))
 				return (null);
-			return (obj);			
+			return (obj.getCachedObject());			
 		}
 		return (null);
 	}
