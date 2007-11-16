@@ -49,6 +49,16 @@ public class JCacheMg {
 		return (true);
 	}
 	
+	public boolean delete(String instanceName,String objKey)
+	{
+		CacheInstance ci = cacheList.get(instanceName);
+		if (null == ci)
+			return (false);
+		synchronized (ci) {
+			return (ci.delete(objKey));
+		}
+	}
+	
 	public void initCacheInstance(String name, long lifetime)
 	{
 		CacheInstance ci = new CacheInstance(name);

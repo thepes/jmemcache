@@ -83,6 +83,21 @@ public class CacheInstance {
 		return (null);
 	}
 
+	/**
+	 * removes an object from memory cache
+	 * @return true on success
+	 */
+	public boolean delete(String key)
+	{
+		if ((null == key) || (key.length() < 1))
+			return (false);
+		if (null != cache)
+			cache.remove(key);
+		if (null != genericCache)
+			genericCache.remove(key);
+		return (true);
+	}
+	
 	public long getCacheLifetime() {
 		return cacheLifetime;
 	}
