@@ -1,6 +1,7 @@
 package org.copains.jmemcache;
 
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.copains.jmemcache.interfaces.JMemCacheable;
@@ -96,6 +97,55 @@ public class CacheInstance {
 		if (null != genericCache)
 			genericCache.remove(key);
 		return (true);
+	}
+	
+	/**
+	 * count objects in this cache instance
+	 * @return the count result
+	 */
+	public int countElements()
+	{
+		if (null != cache)
+			return (cache.size());
+		if (null != genericCache)
+			return (genericCache.size());
+		return (0);
+	}
+	
+	/**
+	 * This this the garbage collector method 
+	 * @return the number of items removed from cache (expired)
+	 */
+	public int gc()
+	{
+		int i = 0;
+		if ((null != cache) &&(cache.size() > 0))
+		{
+			Enumeration<JMemCacheable> e = cache.elements();
+			while (e.hasMoreElements())
+			{
+				JMemCacheable obj = e.nextElement();
+				if (hasExpired(obj))
+				{
+					cache.remove(obj.getKey());
+					i++;
+				}
+			}
+		}
+		if ((null != genericCache) &&(genericCache.size() > 0))
+		{
+			Enumeration<GenericMemCacheable> e = genericCache.elements();
+			while (e.hasMoreElements())
+			{
+				GenericMemCacheable obj = e.nextElement();
+				if (hasExpired(obj))
+				{
+					cache.remove(obj.getKey());
+					i++;
+				}
+			}
+		}
+		return (i);
 	}
 	
 	public long getCacheLifetime() {
