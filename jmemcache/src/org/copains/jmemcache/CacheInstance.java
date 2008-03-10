@@ -9,7 +9,11 @@ import org.copains.jmemcache.objects.GenericMemCacheable;
 
 public class CacheInstance {
 	
+	/*
+	 * cache lifetime in milliseconds
+	 */
 	private long cacheLifetime;
+	
 	private String instanceName; 
 	
 	private Hashtable<String, JMemCacheable> cache;
