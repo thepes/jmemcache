@@ -1,6 +1,7 @@
 package org.copains.jmemcache;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 import org.copains.jmemcache.interfaces.JMemCacheable;
 
@@ -67,6 +68,14 @@ public class JCacheMg {
 		return (ci.countElements());
 	}
 	
+	public Vector<Object> getElements(String instanceName)
+	{
+		CacheInstance ci = cacheList.get(instanceName);
+		if (null == ci)
+			return (null);
+		return (ci.getElements());
+	}
+
 	public void initCacheInstance(String name, long lifetime)
 	{
 		CacheInstance ci = new CacheInstance(name);
