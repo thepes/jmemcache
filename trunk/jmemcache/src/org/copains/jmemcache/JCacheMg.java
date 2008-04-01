@@ -59,6 +59,14 @@ public class JCacheMg {
 		}
 	}
 	
+	public int countElements(String instanceName)
+	{
+		CacheInstance ci = cacheList.get(instanceName);
+		if (null == ci)
+			return (-1);
+		return (ci.countElements());
+	}
+	
 	public void initCacheInstance(String name, long lifetime)
 	{
 		CacheInstance ci = new CacheInstance(name);

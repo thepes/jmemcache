@@ -3,6 +3,7 @@ package org.copains.jmemcache;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Vector;
 
 import org.copains.jmemcache.interfaces.JMemCacheable;
 import org.copains.jmemcache.objects.GenericMemCacheable;
@@ -114,6 +115,35 @@ public class CacheInstance {
 		if (null != genericCache)
 			return (genericCache.size());
 		return (0);
+	}
+	
+	/**
+	 * returns a vector of all cached elements !
+	 * @return
+	 */
+	public Vector<Object> getElements()
+	{
+		if (null != cache)
+		{
+			Enumeration e = cache.elements();
+			Vector<Object> ret = new Vector<Object>();
+			while (e.hasMoreElements())
+			{
+				ret.add(e.nextElement());
+			}
+			return (ret);
+		}
+		if (null != genericCache)
+		{
+			Enumeration e = genericCache.elements();
+			Vector<Object> ret = new Vector<Object>();
+			while (e.hasMoreElements())
+			{
+				ret.add(e.nextElement());
+			}
+			return (ret);
+		}
+		return (null);
 	}
 	
 	/**
