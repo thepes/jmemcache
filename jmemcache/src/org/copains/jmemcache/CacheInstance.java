@@ -135,11 +135,11 @@ public class CacheInstance {
 		}
 		if (null != genericCache)
 		{
-			Enumeration e = genericCache.elements();
+			Enumeration<GenericMemCacheable> e = genericCache.elements();
 			Vector<Object> ret = new Vector<Object>();
 			while (e.hasMoreElements())
 			{
-				ret.add(e.nextElement());
+				ret.add(e.nextElement().getCachedObject());
 			}
 			return (ret);
 		}
