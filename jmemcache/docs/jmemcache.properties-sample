@@ -1,0 +1,8 @@
+! Each line starting with ! or ; is ignored
+; blank lines are ignored too
+
+! to configure a new instance juste put the instance name between brackets [ ]
+[example instance]
+! lifetime is here in seconds 
+lifetime=60
+max.elements=1000

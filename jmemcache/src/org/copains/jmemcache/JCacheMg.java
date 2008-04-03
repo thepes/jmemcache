@@ -99,6 +99,11 @@ public class JCacheMg {
 	public static void initInstance()
 	{
 		instance = new JCacheMg();
+		try {
+			JMemCacheConfig.initConfig();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
