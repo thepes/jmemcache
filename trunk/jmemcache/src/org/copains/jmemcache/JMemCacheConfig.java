@@ -1,11 +1,9 @@
 package org.copains.jmemcache;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 public class JMemCacheConfig {
 	
@@ -31,6 +29,7 @@ public class JMemCacheConfig {
 			String currentInstanceName = null;
 		    String line = br.readLine();
 		    JCacheMg instance = JCacheMg.getInstance();
+		    String maxElts = null;
 		    
 		    while (line != null)
 		    {
@@ -47,10 +46,18 @@ public class JMemCacheConfig {
 		    			{
 		    				Integer life = new Integer(line.substring(line.indexOf("=")+1));
 		    				instance.initCacheInstance(currentInstanceName, life.intValue()*1000);
+		    				if (null != maxElts)
+		    					initMaxElements(currentInstanceName, maxElts);
+		    				maxElts = null;
 		    			}
 		    			if (line.startsWith("max.elements"))
 		    			{
 		    				// TODO: max element is not yet implemented
+		    				CacheInstance ci = instance.getCacheInstance(currentInstanceName);
+		    				if (null == ci)
+		    					maxElts = line.substring(line.indexOf("=")+1);
+		    				else
+		    					ci.setMaxElements(new Integer(line.substring(line.indexOf("=")+1)).intValue());
 		    			}
 		    		}
 		    	}
@@ -77,6 +84,13 @@ public class JMemCacheConfig {
 		if (line.startsWith("!") || line.startsWith(";") || line.startsWith("#"))
 			return (true);
 		return (false);
+	}
+	
+	private static void initMaxElements(String name,String maxElts)
+	{
+		CacheInstance ci = JCacheMg.getInstance().getCacheInstance(name);
+		if (null != ci)
+			ci.setMaxElements(new Integer(maxElts).intValue());
 	}
 	
 	/**
