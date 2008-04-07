@@ -1,0 +1,2 @@
+- Add some configuration elements to know what type of clean we do when max element 
+is reached (GC, removing oldest element ?) => By default we will use GC

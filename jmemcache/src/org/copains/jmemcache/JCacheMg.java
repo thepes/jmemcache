@@ -86,6 +86,16 @@ public class JCacheMg {
 	}
 	
 	/**
+	 * this method returns the cache instance (package use only)
+	 * @param name the instance name
+	 * @return
+	 */
+	protected CacheInstance getCacheInstance(String name)
+	{
+		return (cacheList.get(name));
+	}
+	
+	/**
 	 * get the JCacheMg singleton
 	 * @return the JCacheMg
 	 */

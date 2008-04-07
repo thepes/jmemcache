@@ -15,6 +15,8 @@ public class CacheInstance {
 	 */
 	private long cacheLifetime;
 	
+	private int maxElements = -1;
+	
 	private String instanceName; 
 	
 	private Hashtable<String, JMemCacheable> cache;
@@ -32,6 +34,13 @@ public class CacheInstance {
 			
 		if (null == cache)
 			cache = new Hashtable<String, JMemCacheable>();
+		if (!checkCapacity())
+		{
+			if (gc() < 1)
+			{
+				// TODO: implement a runner to remove oldest element if we can't gc anything				
+			}
+		}
 		Calendar cal = Calendar.getInstance();
 		cacheable.setExpirationDate(cal.getTimeInMillis()+cacheLifetime);
 		if (null != cache.put(cacheable.getKey(), cacheable))
@@ -48,6 +57,14 @@ public class CacheInstance {
 		
 		if (null == genericCache)
 			genericCache = new Hashtable<String, GenericMemCacheable>();
+
+		if (!checkCapacity())
+		{
+			if (gc() < 1)
+			{
+				// TODO: implement a runner to remove oldest element if we can't gc anything				
+			}
+		}
 		GenericMemCacheable gmc = new GenericMemCacheable(o);
 		Calendar cal = Calendar.getInstance();
 		long exp = cal.getTimeInMillis() + cacheLifetime;
@@ -182,6 +199,21 @@ public class CacheInstance {
 		return (i);
 	}
 	
+	/**
+	 *  returns true if there's free room.
+	 */
+	private boolean checkCapacity()
+	{
+		if (maxElements <= 0)
+			return (true);
+		else
+		{
+			if (countElements() >= maxElements)
+				return(false);
+		}
+		return (true);
+	}
+	
 	public long getCacheLifetime() {
 		return cacheLifetime;
 	}
@@ -204,6 +236,14 @@ public class CacheInstance {
 		if (obj.getExpirationDate() < cal.getTimeInMillis())
 			return (true);
 		return (false);
+	}
+
+	public int getMaxElements() {
+		return maxElements;
+	}
+
+	public void setMaxElements(int maxElements) {
+		this.maxElements = maxElements;
 	}
 
 }
