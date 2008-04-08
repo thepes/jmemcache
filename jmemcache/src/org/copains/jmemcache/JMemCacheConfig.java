@@ -1,6 +1,9 @@
 package org.copains.jmemcache;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -99,10 +102,21 @@ public class JMemCacheConfig {
 	 * @param filename
 	 * @return
 	 */
-	public static boolean loadConfig(String filename)
+	public static boolean loadConfig(String filename) throws FileNotFoundException,IOException
 	{
-//		File 
-		return (false);
+		if (null == filename)
+			return (false);
+		if (filename.length() < 1)
+			return (false);
+
+		File confFile = new File(filename);
+		if (null == confFile)
+			return (false);
+		if (!confFile.exists())
+			return (false);
+		
+		FileInputStream fis = new FileInputStream(confFile);
+		return (parseConfig(fis));
 	}
 
 }
