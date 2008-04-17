@@ -1,5 +1,6 @@
 package org.copains.jmemcache;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -93,6 +94,21 @@ public class JCacheMg {
 	protected CacheInstance getCacheInstance(String name)
 	{
 		return (cacheList.get(name));
+	}
+	
+	/**
+	 * returns a list of currently initialized cache instance
+	 * @return
+	 */
+	public Vector<String> getInstanceNames()
+	{
+		if (null == cacheList)
+			return (null);
+		Vector<String> ret = new Vector<String>();
+		Enumeration<String> e = cacheList.keys();
+		while (e.hasMoreElements())
+			ret.add(e.nextElement());
+		return (ret);
 	}
 	
 	/**
