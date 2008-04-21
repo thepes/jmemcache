@@ -30,6 +30,11 @@ public class GenericMemCacheable implements JMemCacheable {
 		return (expirationDate);
 	}
 
+	public void setKey(String key)
+	{
+		this.key = key;
+	}
+	
 	public String getKey() {
 		return (key);
 	}
