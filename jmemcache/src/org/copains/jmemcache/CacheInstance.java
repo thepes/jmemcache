@@ -69,6 +69,7 @@ public class CacheInstance {
 		Calendar cal = Calendar.getInstance();
 		long exp = cal.getTimeInMillis() + cacheLifetime;
 		gmc.setExpirationDate(exp);
+		gmc.setKey(key);
 		if (null != genericCache.put(key, gmc))
 			return (key);
 		return (null);
