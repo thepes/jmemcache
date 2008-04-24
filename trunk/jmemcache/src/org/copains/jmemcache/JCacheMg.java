@@ -87,6 +87,19 @@ public class JCacheMg {
 	}
 	
 	/**
+	 * remove all elements from a cache Instance (clean)
+	 * @param name
+	 */
+	public void truncateCacheInstance(String name)
+	{
+		CacheInstance ci = cacheList.get(name);
+		if (null == ci)
+			return ;
+		ci.truncate();
+	}
+	
+	
+	/**
 	 * this method returns the cache instance (package use only)
 	 * @param name the instance name
 	 * @return

@@ -22,6 +22,9 @@ public class CacheInstance {
 	private Hashtable<String, JMemCacheable> cache;
 	private Hashtable<String, GenericMemCacheable> genericCache;
 	
+	private long oldestElementDate = 0;
+	private String oldestElementKey = null;
+	
 	public CacheInstance(String name)
 	{
 		instanceName = name;
@@ -37,9 +40,7 @@ public class CacheInstance {
 		if (!checkCapacity())
 		{
 			if (gc() < 1)
-			{
-				// TODO: implement a runner to remove oldest element if we can't gc anything				
-			}
+				removeOldestElement();
 		}
 		Calendar cal = Calendar.getInstance();
 		cacheable.setExpirationDate(cal.getTimeInMillis()+cacheLifetime);
@@ -61,9 +62,7 @@ public class CacheInstance {
 		if (!checkCapacity())
 		{
 			if (gc() < 1)
-			{
-				// TODO: implement a runner to remove oldest element if we can't gc anything				
-			}
+				removeOldestElement();
 		}
 		GenericMemCacheable gmc = new GenericMemCacheable(o);
 		Calendar cal = Calendar.getInstance();
@@ -120,6 +119,15 @@ public class CacheInstance {
 		if (null != genericCache)
 			genericCache.remove(key);
 		return (true);
+	}
+	
+	/**
+	 * remove all elements from this cache instance
+	 */
+	protected void truncate()
+	{
+		cache = null;
+		genericCache = null;
 	}
 	
 	/**
@@ -182,6 +190,14 @@ public class CacheInstance {
 					cache.remove(obj.getKey());
 					i++;
 				}
+				else
+				{
+					if ((oldestElementDate == 0) || (oldestElementDate > obj.getExpirationDate()))
+					{
+						oldestElementDate = obj.getExpirationDate();
+						oldestElementKey = obj.getKey();
+					}
+				}
 			}
 		}
 		if ((null != genericCache) &&(genericCache.size() > 0))
@@ -195,9 +211,27 @@ public class CacheInstance {
 					cache.remove(obj.getKey());
 					i++;
 				}
+				else
+				{
+					if ((oldestElementDate == 0) || (oldestElementDate > obj.getExpirationDate()))
+					{
+						oldestElementDate = obj.getExpirationDate();
+						oldestElementKey = obj.getKey();
+					}
+				}
 			}
 		}
 		return (i);
+	}
+	
+	private void removeOldestElement()
+	{
+		if (null != oldestElementKey)
+		{
+			delete(oldestElementKey);
+			oldestElementDate = 0;
+			oldestElementKey = null;
+		}
 	}
 	
 	/**

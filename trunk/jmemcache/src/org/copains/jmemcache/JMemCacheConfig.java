@@ -18,6 +18,8 @@ public class JMemCacheConfig {
 	    try {
 	    	ClassLoader cl = Class.forName("org.copains.jmemcache.JMemCacheConfig").getClassLoader();
 	    	InputStream is = cl.getResourceAsStream("/jmemcache.properties");
+	    	if (null == is)
+	    		is =  cl.getResourceAsStream("jmemcache.properties");
 	    	parseConfig(is);
 	    } catch (Exception e) {
 	    	e.printStackTrace();
