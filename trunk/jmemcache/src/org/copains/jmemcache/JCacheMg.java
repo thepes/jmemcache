@@ -125,6 +125,22 @@ public class JCacheMg {
 	}
 	
 	/**
+	 * launch Garbage Collection on All cache Instances
+	 * @return
+	 */
+	public int gcAll()
+	{
+		if (null == cacheList)
+			return (0);
+		
+		int count = 0;
+		Enumeration<CacheInstance> list = cacheList.elements();
+		while (list.hasMoreElements())
+			count += list.nextElement().gc();
+		return (count);
+	}
+	
+	/**
 	 * get the JCacheMg singleton
 	 * @return the JCacheMg
 	 */
