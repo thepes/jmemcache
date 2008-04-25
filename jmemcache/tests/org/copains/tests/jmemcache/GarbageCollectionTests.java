@@ -49,6 +49,5 @@ public class GarbageCollectionTests {
 				instance.getCachedObject(INSTANCE_NAME, ""+(i-1)));
 	}
 	
-
 	
 }
