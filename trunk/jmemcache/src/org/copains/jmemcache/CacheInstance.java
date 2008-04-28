@@ -208,7 +208,7 @@ public class CacheInstance {
 				GenericMemCacheable obj = e.nextElement();
 				if (hasExpired(obj))
 				{
-					cache.remove(obj.getKey());
+					genericCache.remove(obj.getKey());
 					i++;
 				}
 				else

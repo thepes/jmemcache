@@ -1,17 +1,26 @@
 package org.copains.tests.jmemcache;
 
-import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
-import org.copains.jmemcache.CacheInstance;
 import org.copains.jmemcache.JCacheMg;
-import org.junit.Assert;
 import org.junit.Test;
 
-public class JCacheMgTests {
+public class JCacheMgTests extends TestCase {
 
+	
+	
 	@Test
 	public void testGetCachedObject() {
-		fail("Not yet implemented"); // TODO
+		String result = "should be this";
+		JCacheMg instance = JCacheMg.getInstance();
+		instance.cache("testInstance", result,"key");
+		for (int i = 0 ; i < 5 ; i++)
+		{
+			Object o = new Object();
+			instance.cache("testInstance", o, ""+i);
+		}
+		String test = (String)instance.getCachedObject("testInstance", "key");
+		assertEquals("Stored object and object in cache not same", result, test);
 	}
 
 	@Test
@@ -22,18 +31,19 @@ public class JCacheMgTests {
 	}
 
 	@Test
-	public void testCacheStringJMemCacheable() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
-	public void testCacheStringObjectString() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	@Test
 	public void testDelete() {
-		fail("Not yet implemented"); // TODO
+		String result = "should be this";
+		JCacheMg instance = JCacheMg.getInstance();
+		instance.cache("testInstance", result,"key");
+		for (int i = 0 ; i < 5 ; i++)
+		{
+			Object o = new Object();
+			instance.cache("testInstance", o, ""+i);
+		}
+		instance.delete("testInstance", "key");
+		String test = (String)instance.getCachedObject("testInstance", "key");
+		assertNull("Object not removed", test);
+		
 	}
 
 	@Test

@@ -1,11 +1,12 @@
 package org.copains.tests.jmemcache;
 
 import static org.junit.Assert.*;
+import junit.framework.TestCase;
 
 import org.copains.jmemcache.JCacheMg;
 import org.junit.Test;
 
-public class GarbageCollectionTests {
+public class GarbageCollectionTests extends TestCase {
 
 	private static final String INSTANCE_NAME = "testInstance";
 	
@@ -49,5 +50,28 @@ public class GarbageCollectionTests {
 				instance.getCachedObject(INSTANCE_NAME, ""+(i-1)));
 	}
 	
+	
+	@Test
+	public void testGc_cleaningOldElts()
+	{
+		JCacheMg instance = JCacheMg.getInstance();
+		
+		// cleaning cache
+		instance.truncateCacheInstance(INSTANCE_NAME);
+		Object o = new Object();
+		instance.cache(INSTANCE_NAME, o, "1");
+		int i;
+		for (i = 0 ; i < 15 ; i++)
+		{
+			o = new Object();
+			instance.cache(INSTANCE_NAME, o, ""+i);			
+		}
+		try {
+			Thread.sleep(11000);
+		} catch (Exception e) {
+		}
+		o = new Object();
+		assertNotNull("cache succedeed", instance.cache(INSTANCE_NAME, o, "test"));
+	}
 	
 }
