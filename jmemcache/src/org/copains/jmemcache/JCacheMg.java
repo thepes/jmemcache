@@ -69,6 +69,14 @@ public class JCacheMg {
 		return (ci.countElements());
 	}
 	
+	public long getGcCalls(String instanceName)
+	{
+		CacheInstance ci = cacheList.get(instanceName);
+		if (null == ci)
+			return (-1);
+		return (ci.getGcCalls());
+	}
+
 	public Vector<Object> getElements(String instanceName)
 	{
 		CacheInstance ci = cacheList.get(instanceName);

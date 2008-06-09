@@ -31,7 +31,7 @@ public class JMCMonitor extends HttpServlet {
 		}
 		for (String name : instances)
 		{
-			out.println("["+name+"]:"+inst.countElements(name));
+			out.println("["+name+"]:"+inst.countElements(name) + " (GC:"+inst.getGcCalls(name)+")");
 		}
 	}
 
