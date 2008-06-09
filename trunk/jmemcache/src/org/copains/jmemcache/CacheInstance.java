@@ -25,6 +25,8 @@ public class CacheInstance {
 	private long oldestElementDate = 0;
 	private String oldestElementKey = null;
 	
+	private long gcCalls = 0;
+	
 	public CacheInstance(String name)
 	{
 		instanceName = name;
@@ -151,7 +153,7 @@ public class CacheInstance {
 	{
 		if (null != cache)
 		{
-			Enumeration e = cache.elements();
+			Enumeration<JMemCacheable> e = cache.elements();
 			Vector<Object> ret = new Vector<Object>();
 			while (e.hasMoreElements())
 			{
@@ -179,6 +181,7 @@ public class CacheInstance {
 	public int gc()
 	{
 		int i = 0;
+		gcCalls ++;
 		if ((null != cache) &&(cache.size() > 0))
 		{
 			Enumeration<JMemCacheable> e = cache.elements();
@@ -279,6 +282,13 @@ public class CacheInstance {
 
 	public void setMaxElements(int maxElements) {
 		this.maxElements = maxElements;
+	}
+
+	/**
+	 * @return the gcCalls
+	 */
+	public long getGcCalls() {
+		return gcCalls;
 	}
 
 }
