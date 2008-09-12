@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import org.copains.jmemcache.exceptions.JMemCacheAnnotationException;
 import org.copains.jmemcache.interfaces.JMemCacheable;
 
 public class JCacheMg {
@@ -51,6 +52,13 @@ public class JCacheMg {
 		return (true);
 	}
 	
+	public boolean cacheAnnoted(Object o) throws JMemCacheAnnotationException
+	{
+		boolean res = false;
+		res = AnnotedClassMg.getInstance().cache(o);
+		return (res);
+	}
+
 	public boolean delete(String instanceName,String objKey)
 	{
 		CacheInstance ci = cacheList.get(instanceName);

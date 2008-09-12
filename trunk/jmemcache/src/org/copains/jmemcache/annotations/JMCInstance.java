@@ -19,10 +19,14 @@ public @interface JMCInstance {
 	 */
 	String instanceName();
 	
-	/* the lifetime of items in cache (in milliseconds) */
-	int lifetime();
+	/* the lifetime of items in cache (in milliseconds) 
+	 * default cache is for 1 hour
+	 */
+	int lifetime() default 3600000;
 	
-	/* max number of elements to store in this instance */
-	int maxElements();
+	/* max number of elements to store in this instance 
+	 * default is No Limit
+	 */
+	int maxElements() default -1;
 
 }
