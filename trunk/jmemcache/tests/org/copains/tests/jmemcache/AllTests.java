@@ -8,8 +8,8 @@ public class AllTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("Test for org.copains.tests.jmemcache");
 		//$JUnit-BEGIN$
-		suite.addTestSuite(GarbageCollectionTests.class);
-		suite.addTestSuite(JCacheMgTests.class);
+		suite.addTestSuite(GarbageCollectionTest.class);
+		suite.addTestSuite(JCacheMgTest.class);
 		//$JUnit-END$
 		return suite;
 	}

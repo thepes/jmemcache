@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 import org.copains.jmemcache.JCacheMg;
 import org.junit.Test;
 
-public class JCacheMgTests extends TestCase {
+public class JCacheMgTest extends TestCase {
 
 	
 	
