@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 import org.copains.jmemcache.JCacheMg;
 import org.junit.Test;
 
-public class GarbageCollectionTests extends TestCase {
+public class GarbageCollectionTest extends TestCase {
 
 	private static final String INSTANCE_NAME = "testInstance";
 	
