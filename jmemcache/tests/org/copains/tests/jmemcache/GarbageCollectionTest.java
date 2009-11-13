@@ -4,11 +4,17 @@ import static org.junit.Assert.*;
 import junit.framework.TestCase;
 
 import org.copains.jmemcache.JCacheMg;
+import org.junit.Before;
 import org.junit.Test;
 
 public class GarbageCollectionTest extends TestCase {
 
 	private static final String INSTANCE_NAME = "testInstance";
+	
+	@Before
+	public void setup() {
+		JCacheMg.initInstance();
+	}
 	
 	@Test
 	public void testGc_Full() {
