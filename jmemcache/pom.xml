@@ -22,4 +22,18 @@
   		<version>2.5</version>
   	</dependency>
   </dependencies>
+  <distributionManagement>
+  <!-- use the following if you're not using a snapshot version. -->
+  <repository>
+    <id>nexus.default</id>
+    <name>nexus copains</name>
+    <url>http://www.copains.org:8080/nexus/content/repositories/releases</url>
+  </repository>
+  <!-- use the following if you ARE using a snapshot version. -->
+  <snapshotRepository>
+    <id>nexus.default</id>
+    <name>Copains Snapshots</name>
+    <url>http://www.copains.org:8080/nexus/content/repositories/snapshots/</url>
+  </snapshotRepository>
+</distributionManagement>
 </project>
